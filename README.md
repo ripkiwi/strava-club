@@ -1,4 +1,3 @@
-# strava-club
+## Strava Club Fetcher
 
-## Property of ITQ,
-### maintained by Kevin Burgers.
+**Property of `ITQ`** </br> *maintained by `Kevin Burgers`*
