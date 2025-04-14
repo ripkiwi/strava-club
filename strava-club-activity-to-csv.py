@@ -112,7 +112,7 @@ def json_to_csv(json_data, csv_filename):
 
     print(f"Strava Club CSV file '{csv_filename}' has been created successfully.")
 
-### Validation, ensures that we only move forward if each step succeeds.
+### Validation and main runner, ensures that we only move forward if each step succeeds.
 if __name__ == "__main__":
     access_token = get_access_token()
     
