@@ -3,6 +3,7 @@ import json
 import csv
 import os
 import locale
+from datetime import datetime
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -23,6 +24,11 @@ delimited = ';' if decimal_point == ',' else ','
 # Obtains the running directory for the .CSV to save to.
 script_dir = os.path.dirname(os.path.abspath(__file__))
 csv_filename = os.path.join(script_dir, "output.csv")
+
+# Make it so that script runs don't overwrite each other and are saved with the date.
+timestamp = datetime.now().strftime("%Y%m%d")
+csv_filename = os.path.join(script_dir), f"strava_club_activities_{timestamp}.csv"
+
 
 # Fetches the access token, or requests a new one using the refresh token.
 def get_access_token():
