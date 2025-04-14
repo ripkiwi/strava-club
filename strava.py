@@ -45,22 +45,24 @@ def fetch_data(access_token):
         print("Error fetching data:", response.status_code, response.text)
         return None
 
-# Attempts conversion from JSON response into a .csv
-#TODO: currently does not look nice, demo build. 
-#TODO: currently saves this to a hardcoded place on my local desktop.
-def json_to_csv(json_data, csv_filename="C:/Users/kevin/Desktop/output.csv"):
+#TODO: fix hardcoded save location
+#TODO: beautify
+def json_to_csv(json_data, csv_filename="C:/Users/kevin/Desktop/strava/strava-club/output.csv"):
     if not json_data:
         print("No data available to convert to CSV.")
         return
 
-    if isinstance(json_data, dict):  
-        json_data = [json_data]  
+    if isinstance(json_data, dict):
+        json_data = [json_data]
 
-    keys = json_data[0].keys() if json_data else []
+    all_keys = set()
+    for entry in json_data:
+        all_keys.update(entry.keys())
 
-    # Write data to CSV, ChatGPT code, have to check it
+    all_keys = list(all_keys)
+
     with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=keys)
+        writer = csv.DictWriter(csv_file, fieldnames=all_keys)
         writer.writeheader()
         writer.writerows(json_data)
 
