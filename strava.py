@@ -1,16 +1,28 @@
 import requests
 import json
 import csv
+import os
+import locale
+from dotenv import load_dotenv
+load_dotenv()
 
-# Private (Kevin Burgers) data for Strava API.
-CLIENT_ID = "151932"
-CLIENT_SECRET = "97245c9f09928690c552fe67b93176f245015b1f"
-REFRESH_TOKEN = "1837d19a3d55c278d32ac9a163a551398cd60cbd"
 
-API_URL = "https://www.strava.com/api/v3/clubs/1392745/activities"
-TOKEN_URL ="https://www.strava.com/api/v3/oauth/token"
+API_URL = os.getenv("STRAVA_API_URL") # References desired club.
+TOKEN_URL ="https://www.strava.com/api/v3/oauth/token" # Leave unchanged
 
-#ACCESS_TOKEN = "70009fe1d7514e3128980eae5b02123dee026f3b" #Legacy, will keep for documenting purposes.
+# Please reference 'https://www.strava.com/settings/api' for your API tokens.
+# See README.md for more information on how to replace these.
+CLIENT_ID = os.getenv("STRAVA_CLIENT_ID")
+CLIENT_SECRET = os.getenv("STRAVA_CLIENT_SECRET")
+REFRESH_TOKEN = os.getenv("STRAVA_REFRESH_TOKEN")
+
+# Auto-detect delimiter for beautifying .CSV according to local standards.
+decimal_point = locale.localeconv()['decimal_point']
+delimited = ';' if decimal_point == ',' else ','
+
+# Obtains the running directory for the .CSV to save to.
+script_dir = os.path.dirname(os.path.abspath(__file__))
+csv_filename = os.path.join(script_dir, "output.csv")
 
 # Fetches the access token, or requests a new one using the refresh token.
 def get_access_token():
@@ -45,9 +57,21 @@ def fetch_data(access_token):
         print("Error fetching data:", response.status_code, response.text)
         return None
 
-#TODO: fix hardcoded save location
-#TODO: beautify
-def json_to_csv(json_data, csv_filename="C:/Users/kevin/Desktop/strava/strava-club/output.csv"):
+# Recursively flattens the JSON so that each nested JSON structure gets their own column in the outputted .csv file.
+def flatten_json(y, parent_key='', sep='.'):
+    items = []
+    for k, v in y.items():
+        new_key = f"{parent_key}{sep}{k}" if parent_key else k
+        if isinstance(v, dict):
+            items.extend(flatten_json(v, new_key, sep=sep).items())
+        elif isinstance(v, list):
+            items.append((new_key, json.dumps(v)))
+        else:
+            items.append((new_key, v))
+    return dict(items)
+
+# Main method, turns the JSON into a .CSV file.
+def json_to_csv(json_data, csv_filename):
     if not json_data:
         print("No data available to convert to CSV.")
         return
@@ -55,18 +79,20 @@ def json_to_csv(json_data, csv_filename="C:/Users/kevin/Desktop/strava/strava-cl
     if isinstance(json_data, dict):
         json_data = [json_data]
 
+    # Flatten all entries first (for a more beautified CSV)
+    flattened_data = [flatten_json(entry) for entry in json_data]
+
+    # Gather all possible keys (these will become the column headers)
     all_keys = set()
-    for entry in json_data:
+    for entry in flattened_data:
         all_keys.update(entry.keys())
 
-    all_keys = list(all_keys)
-
     with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=all_keys)
+        writer = csv.DictWriter(csv_file, fieldnames=all_keys, delimiter=';') # I have added the delimiter to account for default Belgium/France standards.
         writer.writeheader()
-        writer.writerows(json_data)
+        writer.writerows(flattened_data)
 
-    print(f"CSV file '{csv_filename}' has been created successfully.")
+    print(f"Strava Club CSV file '{csv_filename}' has been created successfully.")
 
 # Validation, ensures that we only move forward if each step succeeds.
 if __name__ == "__main__":
@@ -75,4 +101,4 @@ if __name__ == "__main__":
     if access_token:
         data = fetch_data(access_token)
         if data:
-            json_to_csv(data)
+            json_to_csv(data, csv_filename)
