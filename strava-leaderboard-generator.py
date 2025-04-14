@@ -54,7 +54,34 @@ def save_leaderboard_csv(df, date_str):
     df.to_csv(path, sep=delimited, index=False)
     print(f"Saved leaderboard .CSV to {path}.")
 
-### TODO: Visualization
+### We visualize the data to be easier for general user consumption.
+def visualize_leaderboard(df, date_str):
+    df = df.sort_values(by='distance_km', ascending=False)
+
+    athletes = df['athlete_name']
+    distances = df['distance_km']
+    times = df['moving_time_h']
+
+    fig, ax1 = plt.subplots(figsize=(12, 6))
+    bars = ax1.bar(athletes, distances, color='skyblue', label='Distance (km)')
+    ax1.set_ylabel('Distance (km)', color='skyblue')
+    ax1.tick_params(axis='y', labelcolor='skyblue')
+    plt.xticks(rotation=45)
+
+    ax2 = ax1.twinx()
+    ax2.plot(athletes, times, color='darkorange', marker='o', label='Moving Time (h)')
+    ax2.set_ylabel('Moving Time (h)', color='darkorange')
+    ax2.tick_params(axis='y', labelcolor='darkorange')
+
+    plt.title(f'Strava Leaderboard – {date_str}')
+    fig.tight_layout()
+
+    # Save plot
+    output_path = os.path.join(script_dir, f'leaderboard-plots/leaderboard_{date_str}.png')
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    plt.savefig(output_path)
+    print(f"Saved leaderboard plot to {output_path}.")
+    plt.close()
 
 
 ### Validation and main runner, ensures that we only move forward if each step succeeds.
@@ -69,3 +96,4 @@ if __name__ == "__main__":
     date_tag = datetime.now().strftime('%Y%m%d')
     leaderboard_df = generate_leaderboard(latest_csv)
     save_leaderboard_csv(leaderboard_df, date_tag)
+    visualize_leaderboard(leaderboard_df, date_tag)
