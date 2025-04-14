@@ -46,7 +46,8 @@ def fetch_data(access_token):
         return None
 
 # Attempts conversion from JSON response into a .csv
-#TODO: currently does not look nice, demo build.
+#TODO: currently does not look nice, demo build. 
+#TODO: currently saves this to a hardcoded place on my local desktop.
 def json_to_csv(json_data, csv_filename="C:/Users/kevin/Desktop/output.csv"):
     if not json_data:
         print("No data available to convert to CSV.")
