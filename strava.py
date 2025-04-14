@@ -82,13 +82,24 @@ def json_to_csv(json_data, csv_filename):
     # Flatten all entries first (for a more beautified CSV)
     flattened_data = [flatten_json(entry) for entry in json_data]
 
+    # We merge the first and last name into one column, and remove the respective merged columns.
+    for entry in flattened_data:
+        first_name = entry.get('athlete.firstname', '')
+        last_name = entry.get('athlete.lastname','')
+        entry['athlete_name'] = f"{first_name} {last_name}".strip()
+        entry.pop('athlete.firstname', None)
+        entry.pop('athlete.lastname', None)
+
     # Gather all possible keys (these will become the column headers)
     all_keys = set()
     for entry in flattened_data:
         all_keys.update(entry.keys())
 
+    # Sort the column to have 'athlete_name' as first column.
+    ordered_keys = ['athlete_name'] + sorted(k for k in all_keys if k != 'athlete_name')
+
     with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=all_keys, delimiter=';') # I have added the delimiter to account for default Belgium/France standards.
+        writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=delimited)
         writer.writeheader()
         writer.writerows(flattened_data)
 
