@@ -5,30 +5,19 @@ import os
 import locale
 from datetime import datetime
 from dotenv import load_dotenv
+from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR
 load_dotenv()
 
-### Initialization
-
-API_URL = os.getenv("STRAVA_API_URL") # References desired club.
-TOKEN_URL ="https://www.strava.com/api/v3/oauth/token" # Leave unchanged
-
-# Please reference 'https://www.strava.com/settings/api' for your API tokens.
-# See README.md for more information on how to replace these.
-CLIENT_ID = os.getenv("STRAVA_CLIENT_ID")
-CLIENT_SECRET = os.getenv("STRAVA_CLIENT_SECRET")
-REFRESH_TOKEN = os.getenv("STRAVA_REFRESH_TOKEN")
+### Strava API URL, leave unchanged.
+TOKEN_URL ="https://www.strava.com/api/v3/oauth/token"
 
 # Auto-detect delimiter for beautifying .CSV according to local standards.
 decimal_point = locale.localeconv()['decimal_point']
 delimited = ';' if decimal_point == ',' else ','
 
-# Obtains the running directory for the .CSV to save to.
-script_dir = os.path.dirname(os.path.abspath(__file__))
-csv_filename = os.path.join(script_dir, "output.csv")
-
 # Make it so that script runs don't overwrite each other and are saved with the date.
 timestamp = datetime.now().strftime("%Y%m%d")
-csv_filename = os.path.join(script_dir, f"outputted-csv/strava_club_activities_{timestamp}.csv")
+csv_filename = os.path.join(RAW_CSV_DIR, f"raw_club_data_{timestamp}.csv")
 
 
 ### Fetches the access token, or requests a new one using the refresh token.
