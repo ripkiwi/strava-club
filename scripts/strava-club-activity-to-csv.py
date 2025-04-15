@@ -5,20 +5,15 @@ import os
 import locale
 from datetime import datetime
 from dotenv import load_dotenv
-from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR
+from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR, CSV_DELIMITER
 load_dotenv()
 
 ### Strava API URL, leave unchanged.
 TOKEN_URL ="https://www.strava.com/api/v3/oauth/token"
 
-# Auto-detect delimiter for beautifying .CSV according to local standards.
-decimal_point = locale.localeconv()['decimal_point']
-delimited = ';' if decimal_point == ',' else ','
-
 # Make it so that script runs don't overwrite each other and are saved with the date.
 timestamp = datetime.now().strftime("%Y%m%d")
 csv_filename = os.path.join(RAW_CSV_DIR, f"raw_club_data_{timestamp}.csv")
-
 
 ### Fetches the access token, or requests a new one using the refresh token.
 def get_access_token():
@@ -95,7 +90,7 @@ def json_to_csv(json_data, csv_filename):
     ordered_keys = ['athlete_name'] + sorted(k for k in all_keys if k != 'athlete_name')
 
     with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
-        writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=delimited)
+        writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=CSV_DELIMITER)
         writer.writeheader()
         writer.writerows(flattened_data)
 

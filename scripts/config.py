@@ -1,4 +1,5 @@
 import os
+import locale
 from dotenv import load_dotenv
 
 ### Root project directory.
@@ -20,3 +21,7 @@ API_URL = os.getenv("STRAVA_API_URL")
 RAW_CSV_DIR = os.path.join(BASE_DIR, "output/raw-data-csv")
 LEADERBOARD_CSV_DIR = os.path.join(BASE_DIR, "output/leaderboard-csv")
 LEADERBOARD_PLOTS_DIR = os.path.join(BASE_DIR, "output/leaderboard-plots")
+
+# Auto-detect delimiter for beautifying .CSV according to local standards.
+decimal_point = locale.localeconv()['decimal_point']
+CSV_DELIMITER = ';' if decimal_point == ',' else ','

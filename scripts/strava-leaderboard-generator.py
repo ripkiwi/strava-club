@@ -4,12 +4,10 @@ import subprocess
 import glob
 import pandas as pd
 import matplotlib.pyplot as plt
-from config import BASE_DIR
+from config import BASE_DIR, CSV_DELIMITER
 from datetime import datetime, timedelta
 
-# Auto-detect delimiter for beautifying .CSV according to local standards.
-decimal_point = locale.localeconv()['decimal_point']
-delimited = ';' if decimal_point == ',' else ','
+
 
 ### Run the fetch and generate raw data .CSV script.
 def run_fetch_script():
@@ -27,7 +25,7 @@ def get_latest_csv():
 
 ### Generates the leaderboard.
 def generate_leaderboard(csv_path):
-    df = pd.read_csv(csv_path, delimiter=delimited)
+    df = pd.read_csv(csv_path, delimiter=CSV_DELIMITER)
 
     # Example demonstration values, the leaderboard can be created for other values such as elevation gain too.
     leaderboard = df.groupby('athlete_name').agg({
@@ -46,7 +44,7 @@ def generate_leaderboard(csv_path):
 ### We store the leaderboard .CSV locally.
 def save_leaderboard_csv(df, date_str):
     path = os.path.join(BASE_DIR, f"output/leaderboard-csv/leaderboard_{date_str}.csv")
-    df.to_csv(path, sep=delimited, index=False)
+    df.to_csv(path, sep=CSV_DELIMITER, index=False)
     print(f"Saved leaderboard .CSV to {path}.")
 
 ### We visualize the data to be easier for general user consumption.
@@ -72,7 +70,7 @@ def visualize_leaderboard(df, date_str):
     fig.tight_layout()
 
     # Save plot
-    output_path = os.path.join(BASE_DIR, f'leaderboard-plots/leaderboard_{date_str}.png')
+    output_path = os.path.join(BASE_DIR, f'output/leaderboard-plots/leaderboard_{date_str}.png')
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     plt.savefig(output_path)
     print(f"Saved leaderboard plot to {output_path}.")
