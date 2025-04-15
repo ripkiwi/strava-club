@@ -2,18 +2,13 @@ import requests
 import json
 import csv
 import os
-import locale
-from datetime import datetime
-from dotenv import load_dotenv
-from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR, CSV_DELIMITER
-load_dotenv()
+from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR, CSV_DELIMITER, TIMESTAMP
 
 ### Strava API URL, leave unchanged.
 TOKEN_URL ="https://www.strava.com/api/v3/oauth/token"
 
-# Make it so that script runs don't overwrite each other and are saved with the date.
-timestamp = datetime.now().strftime("%Y%m%d")
-csv_filename = os.path.join(RAW_CSV_DIR, f"raw_club_data_{timestamp}.csv")
+# Output .CSV path and name.
+csv_filename = os.path.join(RAW_CSV_DIR, f"raw_club_data_{TIMESTAMP}.csv")
 
 ### Fetches the access token, or requests a new one using the refresh token.
 def get_access_token():

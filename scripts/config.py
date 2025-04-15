@@ -1,5 +1,6 @@
 import os
 import locale
+from datetime import datetime
 from dotenv import load_dotenv
 
 ### Root project directory.
@@ -25,3 +26,6 @@ LEADERBOARD_PLOTS_DIR = os.path.join(BASE_DIR, "output/leaderboard-plots")
 # Auto-detect delimiter for beautifying .CSV according to local standards.
 decimal_point = locale.localeconv()['decimal_point']
 CSV_DELIMITER = ';' if decimal_point == ',' else ','
+
+# Common timestamp generator for visibility in file name generation.
+TIMESTAMP = datetime.now().strftime('%Y-%m-%d')
