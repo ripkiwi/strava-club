@@ -25,3 +25,5 @@ The following script requires:
 
 From the root directory you're able to run:
 >python main.py
+
+All outputted files will be found in the newly created ./output/* directories.

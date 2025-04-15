@@ -62,6 +62,17 @@ def flatten_json(y, parent_key='', sep='.'):
             items.append((new_key, v))
     return dict(items)
 
+### Loads existing unique IDs, skipping them to avoid duplicates.
+def load_existing_ids(csv_filename):
+    existing_ids = set()
+    if os.path.exists(csv_filename):
+        with open(csv_filename, mode='r', encoding='utf-8') as csv_file:
+            reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
+            for row in reader:
+                if 'unique_id' in row:
+                    existing_ids.add(row['unique_id'])
+    return existing_ids
+
 ### Main function, turns the JSON into a .CSV file.
 def json_to_csv(json_data, csv_filename):
     if not json_data:
@@ -71,16 +82,16 @@ def json_to_csv(json_data, csv_filename):
     if isinstance(json_data, dict):
         json_data = [json_data]
 
-    
-
     # Flatten all entries first (for a more beautified CSV)
     flattened_data = [flatten_json(entry) for entry in json_data]
 
     # Decides which fields contribute to the unique hash.
     hash_fields = ['athlete.firstname','distance''elapsed_time','moving_time']
 
+    # Generate unique hash 'unique_id' for each row.
     for entry in flattened_data:
         entry['unique_id'] = generate_row_hash(entry, hash_fields)
+        entry['date_added'] = TIMESTAMP
 
     # We merge the first and last name into one column, and remove the respective merged columns.
     for entry in flattened_data:
@@ -90,22 +101,37 @@ def json_to_csv(json_data, csv_filename):
         entry.pop('athlete.firstname', None)
         entry.pop('athlete.lastname', None)
 
+    # Load existing unique IDs from the file.
+    existing_ids = load_existing_ids(csv_filename)
+
+    # Filter out any duplicates.
+    new_data = [entry for entry in flattened_data if entry['unique_id'] not in existing_ids]
+
+    if not new_data:
+        print("There was no new unique data to write.")
+        return
+
     # Gather all possible keys (these will become the column headers)
     all_keys = set()
-    for entry in flattened_data:
+    for entry in new_data:
         all_keys.update(entry.keys())
 
     # Sort the column to have 'athlete_name' as first column.
     ordered_keys = ['athlete_name'] + sorted(k for k in all_keys if k != 'athlete_name')
+
+    # Validation for added columns.
     if 'unique_id' not in ordered_keys:
         ordered_keys.append('unique_id')
+    if 'date_added' not in ordered_keys:
+        ordered_keys.append('date_added')
 
-    with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
+
+    with open(csv_filename, "a", newline="", encoding="utf-8") as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=CSV_DELIMITER)
         writer.writeheader()
         writer.writerows(flattened_data)
 
-    print(f"Strava Club CSV file '{csv_filename}' has been created successfully.")
+    print(f"Strava Club CSV file '{csv_filename}' has been created/appended successfully.")
 
 ### Validation and main runner, ensures that we only move forward if each step succeeds.
 if __name__ == "__main__":
