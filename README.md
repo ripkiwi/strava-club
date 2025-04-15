@@ -1,13 +1,10 @@
-## Strava Club Fetcher
-
-**Property of [`ITQ`](https://itq.eu)** </br>
-*maintained by `Kevin Burgers`*
-
----
+**Strava Club Fetcher**
 
 This Python script fetches the latest activities from a specified Strava Club and exports the data to a clean and structured `.csv` file.
 
 Additionially it creates a `.csv` file with the basis of a leaderboard and visualization thereof for a easy and quick comparison, documenting, or further analysis.
+
+With the new Strava API lacking essential attributes such as `start_date` and `activity_id`, this makes it so you can save all activities in your club and identify them uniquely due to the added `unique_id` tag.
 
 ---
 
