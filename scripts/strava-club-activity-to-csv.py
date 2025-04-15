@@ -2,6 +2,7 @@ import requests
 import json
 import csv
 import os
+import hashlib
 from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR, CSV_DELIMITER, TIMESTAMP
 
 ### Strava API URL, leave unchanged.
@@ -28,6 +29,11 @@ def get_access_token():
     else:
         print("Error fetching access token:", response.status_code, response.text)
         return None
+
+### Generates a unique hash per row. This is used to check for duplicates, considering Strava's API is too limited.
+def generate_row_hash(entry: dict, fields_to_use: list) -> str:
+    key_string = '|'.join(str(entry.get(field, '')) for field in fields_to_use)
+    return hashlib.sha256(key_string.encode('utf-8')).hexdigest()
 
 ### Using the access token, retrieves the requested data from the club.
 def fetch_data(access_token):
@@ -65,8 +71,16 @@ def json_to_csv(json_data, csv_filename):
     if isinstance(json_data, dict):
         json_data = [json_data]
 
+    
+
     # Flatten all entries first (for a more beautified CSV)
     flattened_data = [flatten_json(entry) for entry in json_data]
+
+    # Decides which fields contribute to the unique hash.
+    hash_fields = ['athlete.firstname','distance''elapsed_time','moving_time']
+
+    for entry in flattened_data:
+        entry['unique_id'] = generate_row_hash(entry, hash_fields)
 
     # We merge the first and last name into one column, and remove the respective merged columns.
     for entry in flattened_data:
@@ -83,6 +97,8 @@ def json_to_csv(json_data, csv_filename):
 
     # Sort the column to have 'athlete_name' as first column.
     ordered_keys = ['athlete_name'] + sorted(k for k in all_keys if k != 'athlete_name')
+    if 'unique_id' not in ordered_keys:
+        ordered_keys.append('unique_id')
 
     with open(csv_filename, "w", newline="", encoding="utf-8") as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=CSV_DELIMITER)
