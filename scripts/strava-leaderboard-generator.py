@@ -5,14 +5,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from config import BASE_DIR, CSV_DELIMITER, TIMESTAMP
 
-### Run the fetch and generate raw data .CSV script.
-def run_fetch_script():
-    fetch_script = os.path.join(BASE_DIR, 'scripts/strava-club-activity-to-csv.py')
-    result = subprocess.run(["python", fetch_script], capture_output=True, text=True)
-    print(result.stdout)
-    if result.returncode != 0:
-        print("Error running strava-club-activity-to-csv.py:", result.stderr)
-        exit(1)
+# ### Run the fetch and generate raw data .CSV script.
+# def run_fetch_script():
+#     fetch_script = os.path.join(BASE_DIR, 'scripts/strava-club-activity-to-csv.py')
+#     result = subprocess.run(["python", fetch_script], capture_output=True, text=True)
+#     print(result.stdout)
+#     if result.returncode != 0:
+#         print("Error running strava-club-activity-to-csv.py:", result.stderr)
+#         exit(1)
 
 ### Loads the latest outputted .CSV file.
 def get_latest_csv():
@@ -30,8 +30,8 @@ def generate_leaderboard(csv_path):
     }).reset_index()
 
     # TODO: this might need some fine tuning.
-    leaderboard['distance_km'] = (leaderboard['distance'] / 1000).round(2)
-    leaderboard['moving_time_h'] = (leaderboard['moving_time'] / 3600).round(2)
+    leaderboard['distance_km'] = (leaderboard['distance'] / 1000).round(3)
+    leaderboard['moving_time_m'] = (leaderboard['moving_time'] / 60).round(2)
     leaderboard = leaderboard.drop(columns=['distance', 'moving_time'])
 
     leaderboard = leaderboard.sort_values(by='distance_km', ascending=False)
@@ -49,7 +49,7 @@ def visualize_leaderboard(df):
 
     athletes = df['athlete_name']
     distances = df['distance_km']
-    times = df['moving_time_h']
+    times = df['moving_time_m']
 
     fig, ax1 = plt.subplots(figsize=(12, 6))
     bars = ax1.bar(athletes, distances, color='skyblue', label='Distance (km)')
@@ -59,7 +59,7 @@ def visualize_leaderboard(df):
 
     ax2 = ax1.twinx()
     ax2.plot(athletes, times, color='darkorange', marker='o', label='Moving Time (h)')
-    ax2.set_ylabel('Moving Time (h)', color='darkorange')
+    ax2.set_ylabel('Moving Time (m)', color='darkorange')
     ax2.tick_params(axis='y', labelcolor='darkorange')
 
     plt.title(f'Strava Leaderboard – {TIMESTAMP}')
@@ -75,7 +75,7 @@ def visualize_leaderboard(df):
 
 ### Validation and main runner, ensures that we only move forward if each step succeeds.
 if __name__ == "__main__":
-    run_fetch_script()
+    # run_fetch_script()
 
     latest_csv = get_latest_csv()
     if not latest_csv:
