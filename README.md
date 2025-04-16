@@ -17,7 +17,7 @@ Copy `.env.example` to `.env` and fill in your API credentials from: 'https://ww
 The following script requires:
 - python (3.7+)
 - requests
-- python-dotenv (if using environment variables)
+- python-dotenv
 
 ---
 

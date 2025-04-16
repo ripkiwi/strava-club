@@ -22,6 +22,7 @@ API_URL = os.getenv("STRAVA_API_URL")
 RAW_CSV_DIR = os.path.join(BASE_DIR, "output/raw-data-csv")
 LEADERBOARD_CSV_DIR = os.path.join(BASE_DIR, "output/leaderboard-csv")
 LEADERBOARD_PLOTS_DIR = os.path.join(BASE_DIR, "output/leaderboard-plots")
+CUSTOM_CSV_DIR = os.path.join(BASE_DIR, "output/custom")
 
 # Auto-detect delimiter for beautifying .CSV according to local standards.
 decimal_point = locale.localeconv()['decimal_point']
