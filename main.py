@@ -25,24 +25,24 @@ def run_scripts():
         print("Script ran and generated leaderboard successfully.")
 
 ### Please uncomment following code if you want to use a custom script.
-def run_custom_script():
-    os.makedirs(CUSTOM_CSV_DIR, exist_ok=True)
-    print("Custom output directory existing ensured.")
+# def run_custom_script():
+#     os.makedirs(CUSTOM_CSV_DIR, exist_ok=True)
+#     print("Custom output directory existing ensured.")
 
-    script_path = os.path.join("scripts", "custom.py")
-    print(f"Running script: {script_path}")
-    result = subprocess.run(["python", script_path])
-    if result.returncode != 0:
-        print(f"Custom script failed with exit code: {result.returncode}")
-    else:
-        print("Custom script ran and generated successfully.")
+#     script_path = os.path.join("scripts", "custom.py")
+#     print(f"Running script: {script_path}")
+#     result = subprocess.run(["python", script_path])
+#     if result.returncode != 0:
+#         print(f"Custom script failed with exit code: {result.returncode}")
+#     else:
+#         print("Custom script ran and generated successfully.")
 
 def main():
     ensure_directories()
     run_scripts()
 
     # Following line should also be uncommented for usage of custom script.
-    run_custom_script()
+    # run_custom_script()
 
 if __name__ == "__main__":
     main()
