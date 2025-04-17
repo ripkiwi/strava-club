@@ -5,15 +5,6 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from config import BASE_DIR, CSV_DELIMITER, TIMESTAMP
 
-# ### Run the fetch and generate raw data .CSV script.
-# def run_fetch_script():
-#     fetch_script = os.path.join(BASE_DIR, 'scripts/strava-club-activity-to-csv.py')
-#     result = subprocess.run(["python", fetch_script], capture_output=True, text=True)
-#     print(result.stdout)
-#     if result.returncode != 0:
-#         print("Error running strava-club-activity-to-csv.py:", result.stderr)
-#         exit(1)
-
 ### Loads the latest outputted .CSV file.
 def get_latest_csv():
     csv_files = sorted(glob.glob(os.path.join(BASE_DIR, "output/raw-data-csv/raw_club_data_*.csv")), reverse=True)
