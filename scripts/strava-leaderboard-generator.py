@@ -1,5 +1,4 @@
 import os
-import subprocess
 import glob
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -20,7 +19,6 @@ def generate_leaderboard(csv_path):
         'moving_time': 'sum',
     }).reset_index()
 
-    # TODO: this might need some fine tuning.
     leaderboard['distance_km'] = (leaderboard['distance'] / 1000).round(3)
     leaderboard['moving_time_m'] = (leaderboard['moving_time'] / 60).round(2)
     leaderboard = leaderboard.drop(columns=['distance', 'moving_time'])
@@ -53,6 +51,11 @@ def visualize_leaderboard(df):
     ax2.set_ylabel('Moving Time (m)', color='darkorange')
     ax2.tick_params(axis='y', labelcolor='darkorange')
 
+    # Add labels with values on the line dots for clarity.
+    for i, (x, y) in enumerate(zip(athletes, times)):
+        ax2.annotate(f'{y:.1f}', (x, y), textcoords="offset points", xytext=(0, 8), 
+                     ha='center', color='darkorange', fontsize=9)
+
     plt.title(f'Strava Leaderboard – {TIMESTAMP}')
     fig.tight_layout()
 
@@ -62,7 +65,6 @@ def visualize_leaderboard(df):
     plt.savefig(output_path)
     print(f"Saved leaderboard plot to {output_path}.")
     plt.close()
-
 
 ### Validation and main runner, ensures that we only move forward if each step succeeds.
 if __name__ == "__main__":

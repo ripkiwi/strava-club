@@ -1,5 +1,4 @@
 import os
-import subprocess
 import glob
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -53,6 +52,11 @@ def visualize_custom_csv(df):
     ax2.plot(athletes, times, color='darkorange', marker='o', label='Moving Time (h)')
     ax2.set_ylabel('Moving Time (m))', color='darkorange')
     ax2.tick_params(axis='y', labelcolor='darkorange')
+
+    # Add labels with values on the line dots for clarity.
+    for i, (x, y) in enumerate(zip(athletes, times)):
+        ax2.annotate(f'{y:.1f}', (x, y), textcoords="offset points", xytext=(0, 8), 
+                     ha='center', color='darkorange', fontsize=9)
 
     plt.title(f'Strava Leaderboard – {TIMESTAMP}')
     fig.tight_layout()
