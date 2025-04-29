@@ -1,5 +1,6 @@
 import os
 import subprocess
+import sys
 from scripts.config import RAW_CSV_DIR, LEADERBOARD_CSV_DIR, LEADERBOARD_PLOTS_DIR, CUSTOM_CSV_DIR
 
 def ensure_directories():
@@ -10,7 +11,7 @@ def ensure_directories():
 def run_scripts():
     script_path = os.path.join("scripts", "strava-club-activity-to-csv.py")
     print(f"Running script: {script_path}")
-    result = subprocess.run(["python", script_path])
+    result = subprocess.run([sys.executable, script_path])
     if result.returncode != 0:
         print(f"Script failed with exit code: {result.returncode}")
     else:
@@ -18,7 +19,7 @@ def run_scripts():
 
     script_path = os.path.join("scripts", "strava-leaderboard-generator.py")
     print(f"Running script: {script_path}")
-    result = subprocess.run(["python", script_path])
+    result = subprocess.run([sys.executable, script_path])
     if result.returncode != 0:
         print(f"Script failed with exit code: {result.returncode}")
     else:
