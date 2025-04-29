@@ -39,10 +39,10 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: leaderboard-csv-${{ github.run_id }}  # Ensure unique name for each run
-        path: output/leaderboard-csv/leaderboard_${{ github.run_id }}*.csv
+        path: output/leaderboard-csv/leaderboard_*.csv
 
     - name: Upload leaderboard plot
       uses: actions/upload-artifact@v4
       with:
         name: leaderboard-plot-${{ github.run_id }}  # Ensure unique name for each run
-        path: output/leaderboard-plots/leaderboard_${{ github.run_id }}*.png
+        path: output/leaderboard-plots/leaderboard_*.png
