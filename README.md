@@ -25,6 +25,7 @@ The following script requires:
 
 From the root directory you're able to run:
 
+>pip install -r requirements.txt
 >python main.py
 
-All outputted files will be found in the newly created `./output/` directories.
+All outputted files will be found in the newly created `output/.` directories from the root directory.

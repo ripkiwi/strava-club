@@ -1,6 +1,8 @@
 name: Python Testing CI
 
-on: [push]
+on:
+  # push: # Uncomment and comment this for CI Testing, commented for rate limit on Strava API.
+  workflow_dispatch:
 
 jobs:
   fetch-ubuntu:
@@ -32,7 +34,7 @@ jobs:
         with:
           name: zipped_output
           path: zipped_output_*
-          
+
       # - name: Upload raw club data CSV
       #   uses: actions/upload-artifact@v4
       #   with:
