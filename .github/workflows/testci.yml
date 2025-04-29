@@ -20,6 +20,19 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+        
     - name: Run script
       run: |
         python main.py
+
+    - name: Upload leaderboard CSV
+      uses: actions/upload-artifact@v2
+      with:
+        name: leaderboard-csv
+        path: output/leaderboard-csv/leaderboard_*.csv  # Adjust this to match your generated files
+
+    - name: Upload leaderboard plot
+      uses: actions/upload-artifact@v2
+      with:
+        name: leaderboard-plot
+        path: output/leaderboard-plots/leaderboard_*.png  # Adjust this to match your generated files
