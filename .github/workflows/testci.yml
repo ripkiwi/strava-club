@@ -3,7 +3,7 @@ name: Python Testing CI
 on: [push]
 
 jobs:
-  fetch:
+  fetch-ubuntu:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -39,12 +39,12 @@ jobs:
           name: leaderboard-plot
           path: output/leaderboard-plots/leaderboard_*.png
 
-  test:
-    needs: fetch  # This waits for the fetch job to complete
+  test-os:
+    needs: fetch-ubuntu
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [windows-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
@@ -57,6 +57,13 @@ jobs:
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
+
+      - name: Set env variables from secrets
+        run: |
+          echo "STRAVA_CLIENT_ID=${{ secrets.STRAVA_CLIENT_ID }}" >> $GITHUB_ENV
+          echo "STRAVA_CLIENT_SECRET=${{ secrets.STRAVA_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "STRAVA_REFRESH_TOKEN=${{ secrets.STRAVA_REFRESH_TOKEN }}" >> $GITHUB_ENV
+          echo "STRAVA_API_URL=${{ secrets.STRAVA_API_URL }}" >> $GITHUB_ENV
 
       - name: Test script
         run: python main.py
