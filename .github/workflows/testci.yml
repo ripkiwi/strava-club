@@ -25,14 +25,17 @@ jobs:
       run: |
         python main.py
 
+    - name: List files in output/leaderboard-plots
+      run: ls -al output/leaderboard-plots/
+
     - name: Upload leaderboard CSV
       uses: actions/upload-artifact@v2
       with:
         name: leaderboard-csv
-        path: output/leaderboard-csv/leaderboard_*.csv  # Adjust this to match your generated files
+        path: output/leaderboard-csv/leaderboard_*.csv
 
     - name: Upload leaderboard plot
       uses: actions/upload-artifact@v2
       with:
         name: leaderboard-plot
-        path: output/leaderboard-plots/leaderboard_*.png  # Adjust this to match your generated files
+        path: output/leaderboard-plots/leaderboard_*.png
