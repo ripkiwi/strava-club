@@ -27,6 +27,12 @@ jobs:
       - name: Run data fetch + generate files
         run: python main.py
 
+      - name: Upload raw club data CSV
+        uses: actions/upload-artifact@v4
+        with:
+          name: raw-club-data-csv
+          path: output/raw-data-csv/raw_club_data_*.csv
+
       - name: Upload leaderboard CSV
         uses: actions/upload-artifact@v4
         with:
