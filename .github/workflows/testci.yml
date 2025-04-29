@@ -38,11 +38,11 @@ jobs:
     - name: Upload leaderboard CSV
       uses: actions/upload-artifact@v4
       with:
-        name: leaderboard-csv
+        name: leaderboard-csv-${{ github.run_id }}
         path: output/leaderboard-csv/leaderboard_*.csv
 
     - name: Upload leaderboard plot
       uses: actions/upload-artifact@v4
       with:
-        name: leaderboard-plot
+        name: leaderboard-plot-${{ github.run_id }}
         path: output/leaderboard-plots/leaderboard_*.png
