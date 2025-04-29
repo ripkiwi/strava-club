@@ -1,39 +1,40 @@
 import os
 import subprocess
 import sys
-import zipfile
+import logging
 from pathlib import Path
 from scripts.config import RAW_CSV_DIR, LEADERBOARD_CSV_DIR, LEADERBOARD_PLOTS_DIR, CUSTOM_CSV_DIR
 
 def ensure_directories():
     for path in [RAW_CSV_DIR, LEADERBOARD_CSV_DIR, LEADERBOARD_PLOTS_DIR]:
         os.makedirs(path, exist_ok=True)
-    print("All output directories existing ensured.")
+    logging.info("All output directories existing ensured.")
 
 def run_scripts():
     script_path = Path("scripts", "strava-club-activity-to-csv.py")
-    print(f"Running script: {script_path}")
+    logging.info(f"Running script: {script_path}")
     result = subprocess.run([sys.executable, script_path])
     if result.returncode != 0:
-        print(f"Script failed with exit code: {result.returncode}")
+        logging.error(f"Script failed with exit code: {result.returncode}")
     else:
-        print("Script ran and generated data CSV successfully.")
+        logging.info("Script ran and generated data CSV successfully.")
 
     script_path = Path("scripts", "strava-leaderboard-generator.py")
-    print(f"Running script: {script_path}")
+    logging.info(f"Running script: {script_path}")
     result = subprocess.run([sys.executable, script_path])
     if result.returncode != 0:
-        print(f"Script failed with exit code: {result.returncode}")
+        logging.error(f"Script failed with exit code: {result.returncode}")
     else:
-        print("Script ran and generated leaderboard successfully.")
+        logging.info("Script ran and generated leaderboard successfully.")
 
     script_path = Path("scripts", "filezipper.py")
-    print(f"Running script: {script_path}")
+    logging.info(f"Running script: {script_path}")
     result = subprocess.run([sys.executable, script_path])
     if result.returncode != 0:
-        print(f"Script failed with exit code: {result.returncode}")
+        logging.error(f"Script failed with exit code: {result.returncode}")
     else:
-        print("Script ran and generated .zip successfully.")
+        logging.info("Script ran and generated .zip successfully.")
+        print("Script finished running succesfully.")
 
 ### Please uncomment following code if you want to use a custom script.
 # def run_custom_script():
@@ -56,4 +57,8 @@ def main():
     # run_custom_script()
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception as e:
+        logging.exception("An unexpected error has occured.")
+        raise

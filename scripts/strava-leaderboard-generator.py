@@ -1,13 +1,13 @@
-import os
-import glob
 import pandas as pd
 import matplotlib.pyplot as plt
+import logging
 from pathlib import Path
 from config import BASE_DIR, CSV_DELIMITER, TIMESTAMP
 
 ### Loads the latest outputted .CSV file.
 def get_latest_csv():
     csv_files = sorted(Path(BASE_DIR).glob("output/raw-data-csv/raw_club_data_*.csv"), reverse=True)
+    logging.info("Found the latest .CSV, progressing script...")
     return csv_files[0] if csv_files else None
 
 ### Generates the leaderboard.
@@ -25,13 +25,14 @@ def generate_leaderboard(csv_path):
     leaderboard = leaderboard.drop(columns=['distance', 'moving_time'])
 
     leaderboard = leaderboard.sort_values(by='distance_km', ascending=False)
+    logging.info("Leaderboard generated, progressing script...")
     return leaderboard
 
 ### We store the leaderboard .CSV locally.
 def save_leaderboard_csv(df):
     path = Path(BASE_DIR, f"output/leaderboard-csv/leaderboard_{TIMESTAMP}.csv")
     df.to_csv(path, sep=CSV_DELIMITER, index=False)
-    print(f"Saved leaderboard .CSV to {path}.")
+    logging.info(f"Saved leaderboard .CSV to {path}.")
 
 ### We visualize the data to be easier for general user consumption.
 def visualize_leaderboard(df):
@@ -64,16 +65,14 @@ def visualize_leaderboard(df):
     output_path = Path(BASE_DIR) / 'output' / 'leaderboard-plots' / f'leaderboard_{TIMESTAMP}.png'
     output_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_path)
-    print(f"Saved leaderboard plot to {output_path}.")
+    logging.info(f"Succesfully leaderboard plot to {output_path}.")
     plt.close()
 
 ### Validation and main runner, ensures that we only move forward if each step succeeds.
 if __name__ == "__main__":
-    # run_fetch_script()
-
     latest_csv = get_latest_csv()
     if not latest_csv:
-        print("No CSV found.")
+        logging.error("No CSV found, exiting...")
         exit()
 
     leaderboard_df = generate_leaderboard(latest_csv)

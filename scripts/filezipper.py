@@ -1,5 +1,6 @@
 import zipfile
 import os
+import logging
 from config import RAW_CSV_DIR, LEADERBOARD_CSV_DIR, LEADERBOARD_PLOTS_DIR, TIMESTAMP, BASE_DIR
 from pathlib import Path
 
@@ -10,6 +11,8 @@ files_to_zip = [
     Path(LEADERBOARD_PLOTS_DIR, f"leaderboard_{TIMESTAMP}.png")
 ]
 
+logging.info("All output files found and attempting to zip now.")
+
 # Output zip path
 zip_path = Path(BASE_DIR, f"zipped_output_{TIMESTAMP}.zip")
 
@@ -19,4 +22,4 @@ with zipfile.ZipFile(zip_path, 'w', zipfile.ZIP_DEFLATED) as zipf:
         arcname = os.path.basename(file)
         zipf.write(file, arcname=arcname)
 
-print(f"Created ZIP archive: {zip_path}")
+logging.info("All output files zipped and saved to root directory.")

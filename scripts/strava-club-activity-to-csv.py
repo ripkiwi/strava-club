@@ -3,6 +3,7 @@ import json
 import csv
 import os
 import hashlib
+import logging
 from pathlib import Path
 from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR, CSV_DELIMITER, TIMESTAMP
 
@@ -26,10 +27,11 @@ def get_access_token():
 
     if response.status_code == 200:
         token_data = response.json()
+        logging.info("Succesfully fetched access token, progressing script...")
         return token_data["access_token"]
     else:
-        print(f"Error fetching access token: {response.status_code}")
-        print(f"Error details: {response.text}")
+        logging.error(f"An error occured while fetching the access token: {response.status_code}")
+        logging.error(f"Error details: {response.text}")
         return None
 
 ### Generates a unique hash per row. This is used to check for duplicates, considering Strava's API is too limited.
@@ -46,11 +48,11 @@ def fetch_data(access_token):
     response = requests.get(API_URL, headers=headers)
     
     if response.status_code == 200:
-        print(f"Succesfully fetched following data from API: {response.text}")
+        logging.info(f"Succesfully fetched following data from API, progressing script...")
         return response.json()  # Parse JSON response
     else:
-        print(f"Error fetching data from API: {response.status_code}")
-        print(f"Error details: {response.text}")
+        logging.error(f"An error occured while fetching data from API: {response.status_code}")
+        logging.error(f"Error details: {response.text}")
         return None
 
 ### Recursively flattens the JSON so that each nested JSON structure gets their own column in the outputted .csv file.
@@ -80,8 +82,8 @@ def load_existing_ids(csv_filename):
 ### Main function, turns the JSON into a .CSV file.
 def json_to_csv(json_data, csv_filename):
     if not json_data:
-        print("No data available to convert to CSV.")
-        return
+        logging.error("No data available to convert to CSV, exiting...")
+        exit()
 
     if isinstance(json_data, dict):
         json_data = [json_data]
@@ -112,7 +114,7 @@ def json_to_csv(json_data, csv_filename):
     new_data = [entry for entry in flattened_data if entry['unique_id'] not in existing_ids]
 
     if not new_data:
-        print("There was no new unique data to write.")
+        logging.info("There was no new unique data to write.")
         return
 
     # Gather all possible keys (these will become the column headers)
@@ -129,13 +131,13 @@ def json_to_csv(json_data, csv_filename):
     if 'date_added' not in ordered_keys:
         ordered_keys.append('date_added')
 
-
+    logging.info("Attempting to write to .CSV")
     with open(csv_filename, "a", newline="", encoding="utf-8") as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=CSV_DELIMITER)
         writer.writeheader()
         writer.writerows(flattened_data)
 
-    print(f"Strava Club CSV file '{csv_filename}' has been created/appended successfully.")
+    logging.info(f"Strava Club CSV file '{csv_filename}' has been created/appended successfully.")
 
 ### Validation and main runner, ensures that we only move forward if each step succeeds.
 if __name__ == "__main__":
