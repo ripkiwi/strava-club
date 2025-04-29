@@ -20,6 +20,13 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
+
+    - name: Set environment variables from GitHub Secrets
+      run: |
+        echo "STRAVA_CLIENT_ID=${{ secrets.STRAVA_CLIENT_ID }}" >> $GITHUB_ENV
+        echo "STRAVA_CLIENT_SECRET=${{ secrets.STRAVA_CLIENT_SECRET }}" >> $GITHUB_ENV
+        echo "STRAVA_REFRESH_TOKEN=${{ secrets.STRAVA_REFRESH_TOKEN }}" >> $GITHUB_ENV
+        echo "STRAVA_API_URL=${{ secrets.STRAVA_API_URL }}" >> $GITHUB_ENV
         
     - name: Run script
       run: |
