@@ -27,23 +27,29 @@ jobs:
       - name: Run data fetch + generate files
         run: python main.py
 
-      - name: Upload raw club data CSV
+      - name: Upload zipped data
         uses: actions/upload-artifact@v4
         with:
-          name: raw-club-data-csv
-          path: output/raw-data-csv/raw_club_data_*.csv
+          name: zipped_output
+          path: zipped_output_*
+          
+      # - name: Upload raw club data CSV
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: raw-club-data-csv
+      #     path: output/raw-data-csv/raw_club_data_*.csv
 
-      - name: Upload leaderboard CSV
-        uses: actions/upload-artifact@v4
-        with:
-          name: leaderboard-csv
-          path: output/leaderboard-csv/leaderboard_*.csv
+      # - name: Upload leaderboard CSV
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: leaderboard-csv
+      #     path: output/leaderboard-csv/leaderboard_*.csv
 
-      - name: Upload leaderboard plot
-        uses: actions/upload-artifact@v4
-        with:
-          name: leaderboard-plot
-          path: output/leaderboard-plots/leaderboard_*.png
+      # - name: Upload leaderboard plot
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: leaderboard-plot
+      #     path: output/leaderboard-plots/leaderboard_*.png
 
   test-os:
     needs: fetch-ubuntu
