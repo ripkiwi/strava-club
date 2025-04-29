@@ -28,7 +28,8 @@ def get_access_token():
         token_data = response.json()
         return token_data["access_token"]
     else:
-        print("Error fetching access token:", response.status_code, response.text)
+        print(f"Error fetching access token: {response.status_code}")
+        print(f"Error details: {response.text}")
         return None
 
 ### Generates a unique hash per row. This is used to check for duplicates, considering Strava's API is too limited.
@@ -45,9 +46,11 @@ def fetch_data(access_token):
     response = requests.get(API_URL, headers=headers)
     
     if response.status_code == 200:
+        print(f"Succesfully fetched following data from API: {response.text}")
         return response.json()  # Parse JSON response
     else:
-        print("Error fetching data:", response.status_code, response.text)
+        print(f"Error fetching data from API: {response.status_code}")
+        print(f"Error details: {response.text}")
         return None
 
 ### Recursively flattens the JSON so that each nested JSON structure gets their own column in the outputted .csv file.
