@@ -1,6 +1,7 @@
 import os
 import subprocess
 import sys
+import zipfile
 from pathlib import Path
 from scripts.config import RAW_CSV_DIR, LEADERBOARD_CSV_DIR, LEADERBOARD_PLOTS_DIR, CUSTOM_CSV_DIR
 
@@ -25,6 +26,14 @@ def run_scripts():
         print(f"Script failed with exit code: {result.returncode}")
     else:
         print("Script ran and generated leaderboard successfully.")
+
+    script_path = Path("scripts", "filezipper.py")
+    print(f"Running script: {script_path}")
+    result = subprocess.run([sys.executable, script_path])
+    if result.returncode != 0:
+        print(f"Script failed with exit code: {result.returncode}")
+    else:
+        print("Script ran and generated .zip successfully.")
 
 ### Please uncomment following code if you want to use a custom script.
 # def run_custom_script():
