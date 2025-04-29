@@ -3,13 +3,14 @@ import json
 import csv
 import os
 import hashlib
+from pathlib import Path
 from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR, CSV_DELIMITER, TIMESTAMP
 
 ### Strava API URL, leave unchanged.
 TOKEN_URL ="https://www.strava.com/api/v3/oauth/token"
 
 # Output .CSV path and name.
-csv_filename = os.path.join(RAW_CSV_DIR, f"raw_club_data_{TIMESTAMP}.csv")
+csv_filename = Path(RAW_CSV_DIR, f"raw_club_data_{TIMESTAMP}.csv")
 
 ### Fetches the access token, or requests a new one using the refresh token.
 def get_access_token():

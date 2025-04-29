@@ -2,11 +2,12 @@ import os
 import glob
 import pandas as pd
 import matplotlib.pyplot as plt
+from pathlib import Path
 from config import BASE_DIR, CSV_DELIMITER, TIMESTAMP
 
 ### Loads the latest outputted .CSV file.
 def get_latest_csv():
-    csv_files = sorted(glob.glob(os.path.join(BASE_DIR, "output/raw-data-csv/raw_club_data_*.csv")), reverse=True)
+    csv_files = sorted(Path(BASE_DIR).glob("output/raw-data-csv/raw_club_data_*.csv"), reverse=True)
     return csv_files[0] if csv_files else None
 
 ### Generates the leaderboard.
@@ -28,7 +29,7 @@ def generate_leaderboard(csv_path):
 
 ### We store the leaderboard .CSV locally.
 def save_leaderboard_csv(df):
-    path = os.path.join(BASE_DIR, f"output/leaderboard-csv/leaderboard_{TIMESTAMP}.csv")
+    path = Path(BASE_DIR, f"output/leaderboard-csv/leaderboard_{TIMESTAMP}.csv")
     df.to_csv(path, sep=CSV_DELIMITER, index=False)
     print(f"Saved leaderboard .CSV to {path}.")
 
@@ -60,8 +61,8 @@ def visualize_leaderboard(df):
     fig.tight_layout()
 
     # Save plot
-    output_path = os.path.join(BASE_DIR, f'output/leaderboard-plots/leaderboard_{TIMESTAMP}.png')
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    output_path = Path(BASE_DIR) / 'output' / 'leaderboard-plots' / f'leaderboard_{TIMESTAMP}.png'
+    output_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_path)
     print(f"Saved leaderboard plot to {output_path}.")
     plt.close()
