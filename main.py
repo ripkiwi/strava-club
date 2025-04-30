@@ -54,12 +54,24 @@ def run_custom_script():
     else:
         logging.info("Custom script ran and generated .CSV successfully.")
 
+def run_send_mail_script():
+    script_path = os.path.join("scripts", "send-mail.py")
+    logging.info(f"Running script: {script_path}")
+    result = subprocess.run(["python", script_path])
+    if result.returncode != 0:
+        logging.error(f"Send mail failed with exit code: {result.returncode}")
+    else:
+        logging.info("Mail succesfully sent.")
+
 def main():
     ensure_directories()
     run_scripts()
 
     ### Please uncomment following code if you want to use a custom script.
     # run_custom_script()
+
+    ### OPTIONAL: Please comment following code if you don't want mails to be sent.
+    run_send_mail_script()
 
 if __name__ == "__main__":
     try:
