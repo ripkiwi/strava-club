@@ -4,6 +4,12 @@ import logging
 from pathlib import Path
 from config import BASE_DIR, CSV_DELIMITER, TIMESTAMP
 
+# Configures basic logging.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 ### Loads the latest outputted .CSV file.
 def get_latest_csv():
     csv_files = sorted(Path(BASE_DIR).glob("output/raw-data-csv/raw_club_data_*.csv"), reverse=True)

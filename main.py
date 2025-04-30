@@ -5,6 +5,12 @@ import logging
 from pathlib import Path
 from scripts.config import RAW_CSV_DIR, LEADERBOARD_CSV_DIR, LEADERBOARD_PLOTS_DIR, CUSTOM_CSV_DIR
 
+# Configures basic logging.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 def ensure_directories():
     for path in [RAW_CSV_DIR, LEADERBOARD_CSV_DIR, LEADERBOARD_PLOTS_DIR]:
         os.makedirs(path, exist_ok=True)
@@ -36,24 +42,23 @@ def run_scripts():
         logging.info("Script ran and generated .zip successfully.")
         print("Script finished running succesfully.")
 
-### Please uncomment following code if you want to use a custom script.
-# def run_custom_script():
-#     os.makedirs(CUSTOM_CSV_DIR, exist_ok=True)
-#     print("Custom output directory existing ensured.")
+def run_custom_script():
+    os.makedirs(CUSTOM_CSV_DIR, exist_ok=True)
+    logging.info("Custom output directory existing ensured.")
 
-#     script_path = os.path.join("scripts", "custom.py")
-#     print(f"Running script: {script_path}")
-#     result = subprocess.run(["python", script_path])
-#     if result.returncode != 0:
-#         print(f"Custom script failed with exit code: {result.returncode}")
-#     else:
-#         print("Custom script ran and generated successfully.")
+    script_path = os.path.join("scripts", "custom.py")
+    logging.info(f"Running script: {script_path}")
+    result = subprocess.run(["python", script_path])
+    if result.returncode != 0:
+        logging.error(f"Custom script failed with exit code: {result.returncode}")
+    else:
+        logging.info("Custom script ran and generated .CSV successfully.")
 
 def main():
     ensure_directories()
     run_scripts()
 
-    # Following line should also be uncommented for usage of custom script.
+    ### Please uncomment following code if you want to use a custom script.
     # run_custom_script()
 
 if __name__ == "__main__":

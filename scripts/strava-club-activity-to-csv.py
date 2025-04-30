@@ -7,6 +7,12 @@ import logging
 from pathlib import Path
 from config import CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN, API_URL, RAW_CSV_DIR, CSV_DELIMITER, TIMESTAMP
 
+# Configures basic logging.
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
 ### Strava API URL, leave unchanged.
 TOKEN_URL ="https://www.strava.com/api/v3/oauth/token"
 
