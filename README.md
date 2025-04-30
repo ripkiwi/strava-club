@@ -30,3 +30,5 @@ From the root directory you're able to run:
 >python main.py
 
 All outputted files will be found in the newly created `output/.` directories from the root directory.
+
+Alternatively you can also set up Gmail (because I use Gmail) to receive the output in your mail box directly.
