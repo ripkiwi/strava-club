@@ -17,7 +17,8 @@ logging.basicConfig(
 TOKEN_URL ="https://www.strava.com/api/v3/oauth/token"
 
 # Output .CSV path and name. Removing the timestamp will make it so that all data from the earliest possible point will be consistently saved.
-csv_filename = Path(RAW_CSV_DIR, f"raw_club_data_{TIMESTAMP}.csv")
+# csv_filename = Path(RAW_CSV_DIR, f"raw_club_data_{TIMESTAMP}.csv")
+csv_filename = Path(RAW_CSV_DIR, f"raw_club_data.csv")
 
 ### Fetches the access token, or requests a new one using the refresh token.
 def get_access_token():

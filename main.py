@@ -71,7 +71,7 @@ def main():
     # run_custom_script()
 
     ### OPTIONAL: Please comment following code if you don't want mails to be sent.
-    run_send_mail_script()
+    # run_send_mail_script()
 
 if __name__ == "__main__":
     try:
