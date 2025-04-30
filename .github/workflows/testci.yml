@@ -25,6 +25,10 @@ jobs:
           echo "STRAVA_CLIENT_SECRET=${{ secrets.STRAVA_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "STRAVA_REFRESH_TOKEN=${{ secrets.STRAVA_REFRESH_TOKEN }}" >> $GITHUB_ENV
           echo "STRAVA_API_URL=${{ secrets.STRAVA_API_URL }}" >> $GITHUB_ENV
+          
+          echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> $GITHUB_ENV
+          echo "GMAIL_MAIL=${{ secrets.GMAIL_MAIL }}" >> $GITHUB_ENV
+          echo "GMAIL_RECIPIENT=${{ secrets.GMAIL_RECIPIENT }}" >> $GITHUB_ENV
 
       - name: Run data fetch + generate files
         run: python main.py
@@ -34,24 +38,6 @@ jobs:
         with:
           name: zipped_output
           path: zipped_output_*
-
-      # - name: Upload raw club data CSV
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: raw-club-data-csv
-      #     path: output/raw-data-csv/raw_club_data_*.csv
-
-      # - name: Upload leaderboard CSV
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: leaderboard-csv
-      #     path: output/leaderboard-csv/leaderboard_*.csv
-
-      # - name: Upload leaderboard plot
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: leaderboard-plot
-      #     path: output/leaderboard-plots/leaderboard_*.png
 
   test-os:
     needs: fetch-ubuntu
@@ -78,6 +64,10 @@ jobs:
           echo "STRAVA_CLIENT_SECRET=${{ secrets.STRAVA_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "STRAVA_REFRESH_TOKEN=${{ secrets.STRAVA_REFRESH_TOKEN }}" >> $GITHUB_ENV
           echo "STRAVA_API_URL=${{ secrets.STRAVA_API_URL }}" >> $GITHUB_ENV
+
+          echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> $GITHUB_ENV
+          echo "GMAIL_MAIL=${{ secrets.GMAIL_MAIL }}" >> $GITHUB_ENV
+          echo "GMAIL_RECIPIENT=${{ secrets.GMAIL_RECIPIENT }}" >> $GITHUB_ENV
 
       - name: Test script
         run: python main.py

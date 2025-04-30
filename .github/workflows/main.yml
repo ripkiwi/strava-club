@@ -32,7 +32,10 @@ jobs:
           echo "STRAVA_CLIENT_ID=${{ secrets.STRAVA_CLIENT_ID }}" >> $GITHUB_ENV
           echo "STRAVA_CLIENT_SECRET=${{ secrets.STRAVA_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "STRAVA_REFRESH_TOKEN=${{ secrets.STRAVA_REFRESH_TOKEN }}" >> $GITHUB_ENV
-          echo "STRAVA_API_URL=${{ secrets.STRAVA_API_URL }}" >> $GITHUB_ENV
+          
+          echo "GMAIL_PASS=${{ secrets.GMAIL_PASS }}" >> $GITHUB_ENV
+          echo "GMAIL_MAIL=${{ secrets.GMAIL_MAIL }}" >> $GITHUB_ENV
+          echo "GMAIL_RECIPIENT=${{ secrets.GMAIL_RECIPIENT }}" >> $GITHUB_ENV
 
       - name: Run data fetch + generate files
         run: python main.py
