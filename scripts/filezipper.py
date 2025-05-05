@@ -12,7 +12,7 @@ logging.basicConfig(
 
 # List of files to include
 files_to_zip = [
-    Path(RAW_CSV_DIR, f"raw_club_data_{TIMESTAMP}.csv"),
+    Path(RAW_CSV_DIR, f"raw_club_data.csv"),
     Path(LEADERBOARD_CSV_DIR, f"leaderboard_{TIMESTAMP}.csv"),
     Path(LEADERBOARD_PLOTS_DIR, f"leaderboard_{TIMESTAMP}.png")
 ]

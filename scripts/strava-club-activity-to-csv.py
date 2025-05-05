@@ -79,11 +79,19 @@ def flatten_json(y, parent_key='', sep='.'):
 def load_existing_ids(csv_filename):
     existing_ids = set()
     if os.path.exists(csv_filename):
-        with open(csv_filename, mode='r', encoding='utf-8') as csv_file:
-            reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
-            for row in reader:
-                if 'unique_id' in row:
-                    existing_ids.add(row['unique_id'])
+        try:
+            with open(csv_filename, mode='r', encoding='utf-8') as csv_file:
+                reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
+                for row in reader:
+                    if 'unique_id' in row:
+                        existing_ids.add(row['unique_id'])
+        except UnicodeDecodeError:
+            logging.warning("UTF-8 decoding failed, falling back to latin1...")
+            with open(csv_filename, mode='r', encoding='latin1') as csv_file:
+                reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
+                for row in reader:
+                    if 'unique_id' in row:
+                        existing_ids.add(row['unique_id'])
     return existing_ids
 
 ### Main function, turns the JSON into a .CSV file.
