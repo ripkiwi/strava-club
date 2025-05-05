@@ -12,7 +12,7 @@ logging.basicConfig(
 
 ### Loads the latest outputted .CSV file.
 def get_latest_csv():
-    csv_files = sorted(Path(BASE_DIR).glob("output/raw-data-csv/raw_club_data_*.csv"), reverse=True)
+    csv_files = sorted(Path(BASE_DIR).glob("output/raw-data-csv/raw_club_data*.csv"), reverse=True)
     logging.info("Found the latest .CSV, progressing script...")
     return csv_files[0] if csv_files else None
 
