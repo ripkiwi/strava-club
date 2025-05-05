@@ -80,14 +80,14 @@ def load_existing_ids(csv_filename):
     existing_ids = set()
     if os.path.exists(csv_filename):
         try:
-            with open(csv_filename, mode='r', encoding='utf-8') as csv_file:
+            with open(csv_filename, mode='r', encoding='utf-8', errors='replace') as csv_file:
                 reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
                 for row in reader:
                     if 'unique_id' in row:
                         existing_ids.add(row['unique_id'])
         except UnicodeDecodeError:
             logging.warning("UTF-8 decoding failed, falling back to latin1...")
-            with open(csv_filename, mode='r', encoding='latin1') as csv_file:
+            with open(csv_filename, mode='r', encoding='latin1',  errors='replace') as csv_file:
                 reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
                 for row in reader:
                     if 'unique_id' in row:
@@ -147,7 +147,7 @@ def json_to_csv(json_data, csv_filename):
         ordered_keys.append('date_added')
 
     logging.info("Attempting to write to .CSV")
-    with open(csv_filename, "a", newline="", encoding="utf-8") as csv_file:
+    with open(csv_filename, "a", newline="", encoding="utf-8", errors='replace') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=CSV_DELIMITER)
         writer.writeheader()
         writer.writerows(flattened_data)
