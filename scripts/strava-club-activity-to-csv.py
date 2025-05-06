@@ -77,22 +77,22 @@ def flatten_json(y, parent_key='', sep='.'):
 
 ### Loads existing unique IDs, skipping them to avoid duplicates.
 def load_existing_ids(csv_filename):
-    existing_ids = set()
+    existing_rows = {}
     if os.path.exists(csv_filename):
         try:
             with open(csv_filename, mode='r', encoding='utf-8', errors='replace') as csv_file:
                 reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
                 for row in reader:
                     if 'unique_id' in row:
-                        existing_ids.add(row['unique_id'])
+                        existing_rows[row['unique_id']] = row
         except UnicodeDecodeError:
             logging.warning("UTF-8 decoding failed, falling back to latin1...")
-            with open(csv_filename, mode='r', encoding='latin1',  errors='replace') as csv_file:
+            with open(csv_filename, mode='r', encoding='latin1', errors='replace') as csv_file:
                 reader = csv.DictReader(csv_file, delimiter=CSV_DELIMITER)
                 for row in reader:
                     if 'unique_id' in row:
-                        existing_ids.add(row['unique_id'])
-    return existing_ids
+                        existing_rows[row['unique_id']] = row
+    return existing_rows
 
 ### Main function, turns the JSON into a .CSV file.
 def json_to_csv(json_data, csv_filename):
@@ -123,10 +123,17 @@ def json_to_csv(json_data, csv_filename):
         entry.pop('athlete.lastname', None)
 
     # Load existing unique IDs from the file.
-    existing_ids = load_existing_ids(csv_filename)
+    existing_rows = load_existing_ids(csv_filename)
 
     # Filter out any duplicates.
-    new_data = [entry for entry in flattened_data if entry['unique_id'] not in existing_ids]
+    new_data = []
+    for entry in flattened_data:
+        uid = entry['unique_id']
+        if uid in existing_rows:
+            entry['date_added'] = existing_rows[uid].get('date_added', TIMESTAMP)
+        else:
+            entry['date_added'] = TIMESTAMP
+            new_data.append(entry)
 
     if not new_data:
         logging.info("There was no new unique data to write.")
