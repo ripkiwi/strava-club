@@ -20,6 +20,10 @@ def get_latest_csv():
 def generate_leaderboard(csv_path):
     df = pd.read_csv(csv_path, delimiter=CSV_DELIMITER)
 
+    # Ensure numeric types
+    df['distance'] = pd.to_numeric(df['distance'], errors='coerce')
+    df['moving_time'] = pd.to_numeric(df['moving_time'], errors='coerce')
+
     # Example demonstration values, the leaderboard can be created for other values such as elevation gain too.
     leaderboard = df.groupby('athlete_name').agg({
         'distance': 'sum',
