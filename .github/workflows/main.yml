@@ -18,6 +18,14 @@ jobs:
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: |
             ${{ runner.os }}-pip-
+      
+      - name: Restore .CSV cache
+        uses: actions/cache@v4
+        with:
+          path: scripts/raw_club_data.csv
+          key: raw-csv-cache
+          restore-keys: |
+            raw-csv-cache
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -47,3 +55,9 @@ jobs:
         with:
           name: zipped_output
           path: zipped_output_*
+
+      - name: Save updated CSV to cache
+        uses: actions/cache/save@v4
+        with:
+          path: scripts/raw_club_data.csv
+          key: raw-csv-cache
