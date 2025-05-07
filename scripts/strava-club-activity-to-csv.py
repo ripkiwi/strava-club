@@ -157,7 +157,7 @@ def json_to_csv(json_data, csv_filename):
     with open(csv_filename, "a", newline="", encoding="utf-8", errors='replace') as csv_file:
         writer = csv.DictWriter(csv_file, fieldnames=ordered_keys, delimiter=CSV_DELIMITER)
         writer.writeheader()
-        writer.writerows(flattened_data)
+        writer.writerows(new_data)
 
     logging.info(f"Strava Club CSV file '{csv_filename}' has been created/appended successfully.")
 
