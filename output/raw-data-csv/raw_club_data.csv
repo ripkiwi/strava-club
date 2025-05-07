@@ -1,0 +1,33 @@
+athlete_name,athlete.resource_state,date_added,distance,elapsed_time,moving_time,name,resource_state,sport_type,total_elevation_gain,type,unique_id,workout_type
+Kevin B.,2,2025-05-07,30.8,40,2,Strava API,2,Run,0.0,Run,cf1f41a38b027483c205d8e1c74b34859e88fe43f17ebc7867dcf67e36ff735d,0
+Kevin B.,2,2025-05-07,20.7,25,11,Strava API test walk,2,Run,0.0,Run,1874dc443240bfe5b232c61293e34ce59442d33a6998899a3640dc02715aae0c,0
+Thomas B.,2,2025-05-07,971.6,569,569,Marche dans l'après-midi,2,Walk,5.8,Walk,dcad141dcd228490c5fd6612b5ee7e8e5c6ce235a5aab6c93132a3c93a02fc42,
+Thomas B.,2,2025-05-07,957.6,546,546,Marche le matin,2,Walk,24.8,Walk,762c0256706443c639c76af61137e2e70a482fcdcf88cdbba03bd5ed871a9265,
+Thomas B.,2,2025-05-07,0.0,5337,5337,Entraînement aux poids le matin,2,WeightTraining,0,WeightTraining,89465ecd16847a78ffe2b2569ddfa336521c677d700e4c08521da57f243acb40,
+Thomas B.,2,2025-05-07,0.0,5767,5767,Entraînement aux poids le matin,2,WeightTraining,0,WeightTraining,03cd2ecfb44e6253f105985e6ac8a2d7244422d9bfd80698db9c0e1050aafb32,
+Thomas B.,2,2025-05-07,7512.6,2687,2687,Course à pied le matin,2,Run,26.2,Run,01747eb4ed7d1975202bc63280b48f4bfbd01e1073b6a1146c64aa29a5b782f8,
+Thomas B.,2,2025-05-07,861.4,491,491,Marche le matin,2,Walk,16.8,Walk,30f1c09f43821f72c88bb0d04ab302bd2cae51724d78224aae7ecc9aa739cae3,
+Thomas B.,2,2025-05-07,7010.1,2490,2487,Course à pied le matin,2,Run,31.0,Run,9a23a728c90349c33b734497e92a87bd3558f77a180fe9f2bea4f2b894423928,
+Thomas B.,2,2025-05-07,0.0,5661,5661,Entraînement aux poids dans l'après-midi,2,WeightTraining,0,WeightTraining,16902e22796b3d7acb438e33efeec827623ee7acb456ad5a4a05b7a5b4f25856,
+Thomas B.,2,2025-05-07,910.8,519,519,Marche dans l'après-midi,2,Walk,5.0,Walk,ac777910293270be65864ee0a73656e6fd3889043ecf744d227bd32810eb8636,
+Thomas B.,2,2025-05-07,904.1,503,503,Marche le matin,2,Walk,41.8,Walk,e162b3b494c3b314cd2297e9b6b441d62c8bea0e7bf7bfb591341409a7cf0bbc,
+Thomas B.,2,2025-05-07,896.8,523,523,Marche le matin,2,Walk,25.6,Walk,7f1fd83fb8caabd4f01a44e9b1da520f908b5b9e105ca53b7d020547370822cd,
+Thomas B.,2,2025-05-07,0.0,2918,2918,Entraînement aux poids en soirée,2,WeightTraining,0,WeightTraining,738762e0f4fb005f22586c2dadf9b3bc1a150c107ad2ccaa9756042d4cad7950,
+Kevin B.,2,2025-05-07,1085.0,809,767,Nature Hike,2,Hike,4.1,Hike,af29a77a4c13318c310771617337432f8a5c8bcc38bfd3a378ed7e37babaccb6,
+Thomas B.,2,2025-05-07,0.0,7603,7603,Entraînement aux poids le matin,2,WeightTraining,0,WeightTraining,bb4cabf116cb41a39832c3435c398a5ba4d752c5953f3ae97dc695a92d3f2059,
+Thomas B.,2,2025-05-07,6503.4,2315,2310,Course à pied dans l'après-midi,2,Run,38.4,Run,87fb118f41ffc8610395cc80926c70d03baf3a6ea1cdbf79f436851006e1dfdd,
+Thomas B.,2,2025-05-07,857.2,496,496,Marche le matin,2,Walk,22.4,Walk,0ea4dea6bb9e3469b4df87fc26b2dd1c8df677f72007a583c9192abf2df56e8c,
+Thomas B.,2,2025-05-07,0.0,2242,2242,Entraînement aux poids le matin,2,WeightTraining,0,WeightTraining,e6ea46a0f470516358506540d56f26802b5613e3901b926e0d87d980ce6d25ae,
+Thomas B.,2,2025-05-07,995.8,655,578,Marche dans l'après-midi,2,Walk,0.0,Walk,5fc5916ba831864ca15444835034965546e351dbb797f1ab18d9b21431451581,
+Thomas B.,2,2025-05-07,877.2,516,516,Marche le matin,2,Walk,23.0,Walk,f7458358c06979ebebf77c2fbf643737e0f96930f42fc0d0a92f4f686906f8a8,
+Thomas B.,2,2025-05-07,1046.8,603,603,Marche le matin,2,Walk,18.0,Walk,ce450424b2d6502479804b11b2b86f114b1e49159e39041431e09bf2e927794f,
+Thomas B.,2,2025-05-07,1162.4,852,799,Marche le matin,2,Walk,42.4,Walk,a7f663a5bbe570a8843b9a69d4ed638ebed5a67e2e12dcb549daec0acfbf40d3,
+Kevin B.,2,2025-05-07,3996.9,1386,794,Test Run,2,Run,27.4,Run,5491669b87b9443fe24e58edf20bb182bcbaaa59c108832f646d65803c89827f,2
+Thomas B.,2,2025-05-07,0.0,6464,6464,Entraînement aux poids le midi,2,WeightTraining,0,WeightTraining,2d5876975fc6c87e38a08a7d7eb2e7711088aadd863c9b9c232e4ea99a65d892,
+Thomas B.,2,2025-05-07,1326.2,938,759,Marche dans l'après-midi,2,Walk,11.4,Walk,a6e7ffed864e9e168d59879668539ae44a5a075ad30f282a54383a92c9d0c921,
+Thomas B.,2,2025-05-07,927.2,490,490,Marche dans l'après-midi,2,Walk,5.0,Walk,52ceed2ebffa16649cc1143899474d738befd1b25e36a40bbe4c337f2c6ae47c,
+Thomas B.,2,2025-05-07,887.3,493,493,Marche le matin,2,Walk,19.4,Walk,95755a44e8ea8eb683095457125bc3dc9aaa72356e033d851e68294ec8fb8173,
+Thomas B.,2,2025-05-07,969.1,546,546,Marche dans l'après-midi,2,Walk,3.8,Walk,762c0256706443c639c76af61137e2e70a482fcdcf88cdbba03bd5ed871a9265,
+Thomas B.,2,2025-05-07,870.8,521,521,Marche le matin,2,Walk,23.2,Walk,0fa1ccc65e95337454f941f029bcb1752621cf3702caaf4e8a70c44cf9758c8a,
+athlete_name,athlete.resource_state,date_added,distance,elapsed_time,moving_time,name,resource_state,sport_type,total_elevation_gain,type,unique_id,workout_type
+Kevin B.,2,2025-05-07,4.0,15,0,API Test #3,2,Run,0.0,Run,970060e6482f99e123c0c327c583d27ed4616acd49a6d7c85c93fa1fd5ce965c,0
