@@ -25,7 +25,7 @@ jobs:
           path: output/raw-data-csv/raw_club_data.csv
           key: raw-csv-cache
           restore-keys: |
-            raw-csv-cache
+            raw-csv-cache-
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -60,4 +60,4 @@ jobs:
         uses: actions/cache/save@v4
         with:
           path: output/raw-data-csv/raw_club_data.csv
-          key: raw-csv-cache
+          key: raw-csv-cache-${{ github.run_id }}
