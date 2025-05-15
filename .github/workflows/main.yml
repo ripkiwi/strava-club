@@ -61,5 +61,5 @@ jobs:
       - name: Save updated CSV to cache
         uses: actions/cache/save@v4
         with:
-          path: output/raw-data-cs
+          path: output/raw-data-csv
           key: raw-csv-cache-${{ github.run_id }}
