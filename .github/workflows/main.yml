@@ -19,11 +19,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-pip-
       
+      # Restores the cache, for later appending.
       - name: Restore .CSV cache
         uses: actions/cache@v4
         with:
-          path: output/raw-data-csv/raw_club_data.csv
-          key: raw-csv-cache
+          path: output/raw-data-csv
+          key: raw-csv-cache-${{ github.run_id }}
           restore-keys: |
             raw-csv-cache-
 
@@ -56,8 +57,9 @@ jobs:
           name: zipped_output
           path: zipped_output_*
 
+      # Save to cache, for future use.
       - name: Save updated CSV to cache
         uses: actions/cache/save@v4
         with:
-          path: output/raw-data-csv/raw_club_data.csv
+          path: output/raw-data-cs
           key: raw-csv-cache-${{ github.run_id }}
